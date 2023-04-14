@@ -11,4 +11,8 @@ public class CabinCrewMember extends Person {
     public RankType getRankType() {
         return rankType;
     }
+
+    public String speak(){
+        return "Would you like anything to drink?";
+    }
 }

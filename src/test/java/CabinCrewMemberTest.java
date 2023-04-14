@@ -28,5 +28,9 @@ public class CabinCrewMemberTest {
     public void cabinCrewMemberHasRank__Formatted(){
         assertEquals("Flight Attendant", cabinCrewMember.getRankType().getFormattedRank());
     }
+    @Test
+    public void cabinCrewMemberCanSpeak(){
+        assertEquals("Would you like anything to drink?", cabinCrewMember.speak());
+    }
 
 }
