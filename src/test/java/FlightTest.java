@@ -28,10 +28,10 @@ public class FlightTest {
 
     @Test
     public void flightHasAPlane(){
-        assertEquals(PlaneType.STARR_BUMBLE_BEE_II, flight.getPlane().getPlaneType());
-        assertEquals("Bumble Bee", flight.getPlane().getPlaneType().getFormattedPlane());
-        assertEquals(5, flight.getPlane().getPlaneType().getSeats());
-        assertEquals(200, flight.getPlane().getPlaneType().getWeight(), 0.01);
+        assertEquals(PlaneType.STARR_BUMBLE_BEE_II, flight.getPlane());
+        assertEquals("Bumble Bee", flight.getPlane().getFormattedPlane());
+        assertEquals(5, flight.getPlane().getSeats());
+        assertEquals(200, flight.getPlane().getWeight(), 0.01);
     }
     @Test
     public void flightHasFlightNumber(){
@@ -104,5 +104,13 @@ public class FlightTest {
     @Test
     public void flightCanTakeToTheSky(){
         assertEquals("We are airborne! YEAAAAHHH", flight.takeOff());
+    }
+    @Test
+    public void flightAttendantWillTalkToAllPassengers(){
+        flight.addPassenger(passenger);
+        flight.addPassenger(passenger);
+        flight.addPassenger(passenger);
+        flight.addCrewMember(crew2);
+        assertEquals("Would you like anything to drink? Would you like anything to drink? Would you like anything to drink? ", flight.cabinCrewTalkToPassengers());
     }
 }

@@ -26,8 +26,8 @@ public class Flight {
         this.passengers = new ArrayList<>();
     }
 
-    public Plane getPlane() {
-        return plane;
+    public PlaneType getPlane() {
+        return this.plane.getPlaneType();
     }
 
     public String getFlightNumber() {
@@ -82,6 +82,24 @@ public class Flight {
 
     public String takeOff() {
         return this.getPilot().flyPlane();
+    }
+
+    public CabinCrewMember findFlightAttendant(){
+        for(CabinCrewMember crew : this.crew){
+            if(crew.getRankType().getFormattedRank() == "Flight Attendant"){
+                return crew;
+            }
+        }
+        return null;
+    }
+
+    public String cabinCrewTalkToPassengers(){
+        String total = "";
+        CabinCrewMember crew = findFlightAttendant();
+        for (Passenger passenger : this.passengers){
+            total += crew.speak() + " ";
+        }
+        return total;
     }
 
 }
