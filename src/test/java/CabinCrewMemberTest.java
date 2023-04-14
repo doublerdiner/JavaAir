@@ -11,7 +11,7 @@ public class CabinCrewMemberTest {
 
     @Before
     public void setup(){
-        cabinCrewMember = new CabinCrewMember("Tony", RankType.CAPTAIN);
+        cabinCrewMember = new CabinCrewMember("Tony", RankType.FLIGHT_ATTENDANT);
     }
 
     @Test
@@ -21,12 +21,12 @@ public class CabinCrewMemberTest {
 
     @Test
     public void cabinCrewMemberHasRank__NotFormatted(){
-        assertEquals(RankType.CAPTAIN, cabinCrewMember.getRankType());
+        assertEquals(RankType.FLIGHT_ATTENDANT, cabinCrewMember.getRankType());
     }
 
     @Test
     public void cabinCrewMemberHasRank__Formatted(){
-        assertEquals("Captain", cabinCrewMember.getRankType().getFormattedRank());
+        assertEquals("Flight Attendant", cabinCrewMember.getRankType().getFormattedRank());
     }
 
 }
