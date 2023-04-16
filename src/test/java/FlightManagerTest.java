@@ -4,6 +4,9 @@ import Individuals.Staff.RankType;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 import static org.junit.Assert.assertEquals;
 
 public class FlightManagerTest {
@@ -20,7 +23,7 @@ public class FlightManagerTest {
         passenger2 = new Passenger("Betty", 8);
         pilot = new Pilot("Sheila", RankType.CAPTAIN, "SH98765");
         plane = new Plane(PlaneType.STARR_BUMBLE_BEE_II);
-        flight = new Flight(plane, "BA54321", DestinationType.LAX, DestinationType.EDI, "2000", pilot);
+        flight = new Flight(plane, "BA54321", DestinationType.LAX, DestinationType.EDI, LocalDateTime.of(2023, Month.APRIL, 16, 16, 51, 00), pilot);
         flightManager = new FlightManager(flight);
     }
 

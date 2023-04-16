@@ -2,20 +2,23 @@ import Individuals.Passenger.Passenger;
 import Individuals.Staff.CabinCrewMember;
 import Individuals.Staff.Pilot;
 
+import java.sql.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 
 public class Flight {
     private Plane plane;
     private String flightNumber;
     private DestinationType destination;
     private DestinationType departure;
-    private String departureTime;
+    private LocalDateTime departureTime;
     private Pilot pilot;
     private ArrayList<CabinCrewMember> crew;
     private ArrayList<Passenger> passengers;
+    private ArrayList<Integer> seats;
 
-    public Flight(Plane plane, String flightNumber, DestinationType destination, DestinationType departure, String departureTime, Pilot pilot) {
+    public Flight(Plane plane, String flightNumber, DestinationType destination, DestinationType departure, LocalDateTime departureTime, Pilot pilot) {
         this.plane = plane;
         this.flightNumber = flightNumber;
         this.destination = destination;
@@ -24,6 +27,7 @@ public class Flight {
         this.pilot = pilot;
         this.crew = new ArrayList<>();
         this.passengers = new ArrayList<>();
+        this.seats = new ArrayList<Integer>();
     }
 
     public PlaneType getPlane() {
@@ -42,7 +46,7 @@ public class Flight {
         return departure;
     }
 
-    public String getDepartureTime() {
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
@@ -56,6 +60,10 @@ public class Flight {
 
     public ArrayList<Passenger> getPassengers() {
         return passengers;
+    }
+
+    public ArrayList<Integer> getSeats() {
+        return seats;
     }
 
     public void addCrewMember(CabinCrewMember crew) {
@@ -72,12 +80,15 @@ public class Flight {
 
     public void addPassenger(Passenger passenger) {
         if(freeSeats() > 0){
+            passenger.setSeatNumber(generatePassengerSeatNumber());
            this.passengers.add(passenger);
+           passenger.setFlight(this.flightNumber);
         }
     }
 
     public void removePassenger(Passenger passenger) {
         this.passengers.remove(passenger);
+        passenger.setFlight(new String());
     }
 
     public String takeOff() {
@@ -100,6 +111,20 @@ public class Flight {
             total += crew.speak() + " ";
         }
         return total;
+    }
+
+    public void setSeats(){
+        for (int i=0; i<this.plane.getPlaneType().getSeats(); i++){
+            this.seats.add(i+1);
+        }
+    }
+
+    public int generatePassengerSeatNumber(){
+        if(this.passengers.size() == 0) {
+            setSeats();
+        }
+        int index = (int)(Math.random() * this.seats.size());
+        return this.seats.remove(index);
     }
 
 }

@@ -5,6 +5,13 @@ import Individuals.Staff.RankType;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 
 public class FlightTest {
@@ -22,7 +29,7 @@ public class FlightTest {
         passenger = new Passenger("Claire", 2);
         pilot = new Pilot("Eve", RankType.CAPTAIN, "EV55555");
         plane = new Plane(PlaneType.STARR_BUMBLE_BEE_II);
-        flight = new Flight(plane, "AB123", DestinationType.JFK, DestinationType.DND, "1920", pilot);
+        flight = new Flight(plane, "AB123", DestinationType.JFK, DestinationType.DND, LocalDateTime.of(2023, Month.APRIL, 16, 06,30,00), pilot);
         flight.addCrewMember(crew);
     }
 
@@ -49,7 +56,7 @@ public class FlightTest {
     }
     @Test
     public void flightHasDepartureTime(){
-        assertEquals("1920", flight.getDepartureTime());
+        assertEquals("2023-04-16T06:30", flight.getDepartureTime().toString());
     }
     @Test
     public void flightHasPilot(){
@@ -84,6 +91,14 @@ public class FlightTest {
         assertEquals("Claire", flight.getPassengers().get(0).getName());
     }
     @Test
+    public void flightCanAddFlightNumberToPassenger(){
+        flight.addPassenger(passenger);
+        assertEquals(1, flight.getPassengers().size());
+        assertEquals("AB123", passenger.getFlight());
+    }
+
+
+    @Test
     public void flightCannotAddPassengerBeyondSeatLimit(){
         flight.addPassenger(passenger);
         flight.addPassenger(passenger);
@@ -102,6 +117,14 @@ public class FlightTest {
         assertEquals(1, flight.getPassengers().size());
     }
     @Test
+    public void flightCanRemoveFlightNumberFromPassenger(){
+        flight.addPassenger(passenger);
+        assertEquals("AB123", passenger.getFlight());
+        flight.removePassenger(passenger);
+        assertEquals(0, flight.getPassengers().size());
+        assertEquals("", passenger.getFlight());
+    }
+    @Test
     public void flightCanTakeToTheSky(){
         assertEquals("We are airborne! YEAAAAHHH", flight.takeOff());
     }
@@ -112,5 +135,36 @@ public class FlightTest {
         flight.addPassenger(passenger);
         flight.addCrewMember(crew2);
         assertEquals("Would you like anything to drink? Would you like anything to drink? Would you like anything to drink? ", flight.cabinCrewTalkToPassengers());
+    }
+
+    @Test
+    public void setTheSeatsForFlight(){
+        flight.setSeats();
+        assertEquals(5, flight.getSeats().size());
+    }
+    @Test
+    public void passengerGivenUniqueSeatNumberWhenAddedToFlight(){
+        flight.addPassenger(passenger);
+        System.out.println(passenger.getSeatNumber());
+        Passenger passenger2 = new Passenger("Barry", 1);
+        flight.addPassenger(passenger2);
+        System.out.println(passenger2.getSeatNumber());
+        Passenger passenger3 = new Passenger("Terry", 1);
+        flight.addPassenger(passenger3);
+        System.out.println(passenger3.getSeatNumber());
+        Passenger passenger4 = new Passenger("Harry", 1);
+        flight.addPassenger(passenger4);
+        System.out.println(passenger4.getSeatNumber());
+        Passenger passenger5 = new Passenger("Gary", 1);
+        flight.addPassenger(passenger5);
+        System.out.println(passenger5.getSeatNumber());
+        Set set = new HashSet<>();
+        set.add(passenger.getSeatNumber());
+        set.add(passenger2.getSeatNumber());
+        set.add(passenger3.getSeatNumber());
+        set.add(passenger4.getSeatNumber());
+        set.add(passenger5.getSeatNumber());
+        assertEquals(5, flight.getPassengers().size());
+        assertEquals(5, set.size());
     }
 }
