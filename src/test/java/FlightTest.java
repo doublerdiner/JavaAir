@@ -7,17 +7,13 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
 public class FlightTest {
     private Flight flight;
-    private Plane plane;
-    private Pilot pilot;
     private CabinCrewMember crew;
     private CabinCrewMember crew2;
     private Passenger passenger;
@@ -27,9 +23,9 @@ public class FlightTest {
         crew = new CabinCrewMember("Charlie", RankType.FLIGHT_ATTENDANT);
         crew2 = new CabinCrewMember("Sally", RankType.PURSER);
         passenger = new Passenger("Claire", 2);
-        pilot = new Pilot("Eve", RankType.CAPTAIN, "EV55555");
-        plane = new Plane(PlaneType.STARR_BUMBLE_BEE_II);
-        flight = new Flight(plane, "AB123", DestinationType.JFK, DestinationType.DND, LocalDateTime.of(2023, Month.APRIL, 16, 06,30,00), pilot);
+        Pilot pilot = new Pilot("Eve", RankType.CAPTAIN, "EV55555");
+        Plane plane = new Plane(PlaneType.STARR_BUMBLE_BEE_II);
+        flight = new Flight(plane, "AB123", DestinationType.JFK, DestinationType.DND, LocalDateTime.of(2023, Month.APRIL, 16, 6,30), pilot);
         flight.addCrewMember(crew);
     }
 
@@ -158,7 +154,7 @@ public class FlightTest {
         Passenger passenger5 = new Passenger("Gary", 1);
         flight.addPassenger(passenger5);
         System.out.println(passenger5.getSeatNumber());
-        Set set = new HashSet<>();
+        Set<Object> set = new HashSet<>();
         set.add(passenger.getSeatNumber());
         set.add(passenger2.getSeatNumber());
         set.add(passenger3.getSeatNumber());
